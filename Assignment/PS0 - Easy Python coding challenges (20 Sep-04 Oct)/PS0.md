@@ -322,3 +322,4 @@ Print one integer, the maximum number of lectures during which Jonna can stay aw
 | Sample Input 3 | Sample Output 3 |
 | -------------- | --------------- |
 | `1 0 `         | `0`             |
+
