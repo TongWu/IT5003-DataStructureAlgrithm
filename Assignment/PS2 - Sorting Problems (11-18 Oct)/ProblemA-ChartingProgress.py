@@ -1,3 +1,7 @@
+# Student ID: A0255954R
+# Full Name: Wu Tong
+# Lab Group: B5
+# TA: Steven Halim
 import sys
 
 def solution():
