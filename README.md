@@ -17,3 +17,8 @@
 ### 1.2 Notes
 
 The self-orgnised note can be found at [this link](https://wiki.wu.engineer/NationalUniversityOfSingapore/IT5003-DataStructureAlgorithm), or navigate to the 'Notes' folder in this repo.
+
+### 1.3 Assignments (PSes)
+
+- All problems in `Assignment` folder is not visible until the current PS deadline is passed.
+- The problem in each PS every year is different, trying to copy the code from `Assignment` folder for your own assignment (PSes) purpose will be considered as plagiarism. Assignments (PS) currently judged to be plagiarized will receive a zero, as will subsequent assignments.
