@@ -4,7 +4,7 @@
 > - All problems in `Assignment` folder is not visible until the current PS deadline passes.
 > - The problems in each PS is different every year, trying to copy the code from `Assignment` folder for your own assignment (PSes) purpose will be considered as plagiarism. Assignments (PS) currently judged to be plagiarized will receive a zero, as will subsequent assignments.
 
-## 1. Introductions
+## 1. Introduction
 
 ### 1.1 Disclaimer and References
 
