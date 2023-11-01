@@ -21,4 +21,4 @@ The self-orgnised note can be found at [this link](https://wiki.wu.engineer/Nati
 ### 1.3 Assignments (PSes)
 
 - All problems in `Assignment` folder is not visible until the current PS deadline is passed.
-- The problem in each PS every year is different, trying to copy the code from `Assignment` folder for your own assignment (PSes) purpose will be considered as plagiarism. Assignments (PS) currently judged to be plagiarized will receive a zero, as will subsequent assignments.
+- The problems in each PS is different every year, trying to copy the code from `Assignment` folder for your own assignment (PSes) purpose will be considered as plagiarism. Assignments (PS) currently judged to be plagiarized will receive a zero, as will subsequent assignments.
