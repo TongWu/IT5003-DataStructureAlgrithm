@@ -1,7 +1,7 @@
 # IT5003 - Data Structures and Algorithms
 
 > ## Assignments (PSes)
-> - All problems in `Assignment` folder is not visible until the current PS deadline is passed.
+> - All problems in `Assignment` folder is not visible until the current PS deadline passes.
 > - The problems in each PS is different every year, trying to copy the code from `Assignment` folder for your own assignment (PSes) purpose will be considered as plagiarism. Assignments (PS) currently judged to be plagiarized will receive a zero, as will subsequent assignments.
 
 ## 1. Introductions
@@ -16,7 +16,7 @@
 
 - The most of the content and material used in this repo are referred from the National University of Singapore. Few of contents in the block as mentioned before, are referenced from the University of Manchester, Columbia University, website or/and self-organized. 
 
-- **Do not share any content in this repo to anyone without permission, including course material, video, lab assignment and notes.**
+- **Do not share any content in this repo to anyone without permission, including course materials, videos, lab assignments and notes.**
 
 ### 1.2 Notes
 
