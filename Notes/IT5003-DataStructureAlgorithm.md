@@ -354,6 +354,17 @@ Can only search from head/tail, insert new item to head/tail, remove item from h
 
 # 3 - Binary Heap
 
+## 3.1 Introduction
+
+A Binary Max Heap is a complete binary tree that maintains the Max Heap property
+
+Complete Binary Tree: Every level in the binary tree, except possibly the last/lowest level, is completely filled, and all vertices in the last level are as fat left as possible.
+
+Max Heap Property: The parent of each vertex - except the root - contains value greater than (or equal to) the value of that vertex.
+
+> 1. 完全二叉树（Complete Binary Tree）：在这种树中，除了最后一层可能没有完全填满外，其它每一层都是完全填满的，并且在最后一层，所有的节点都尽可能地靠左边。
+> 2. 最大堆属性（Max Heap Property）：在这样的堆中，每个节点的值都大于或等于它的子节点的值。唯一的例外是根节点，因为它没有父节点。
+
 
 
 # 4 - Hash Table
