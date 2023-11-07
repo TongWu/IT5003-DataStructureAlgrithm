@@ -365,7 +365,73 @@ Max Heap Property: The parent of each vertex - except the root - contains value 
 > 1. 完全二叉树（Complete Binary Tree）：在这种树中，除了最后一层可能没有完全填满外，其它每一层都是完全填满的，并且在最后一层，所有的节点都尽可能地靠左边。
 > 2. 最大堆属性（Max Heap Property）：在这样的堆中，每个节点的值都大于或等于它的子节点的值。唯一的例外是根节点，因为它没有父节点。
 
+## 3.2 Binary Heap Height
 
+If we have a Binary Heap of $N$ elements, its height will not be taller than $O(log\ N)$.
+
+## 3.3 Binary Max Heap Operations
+
+### `Insert(v)`
+
+Insertion of a new item **v** into a Binary Max Heap can only be done at the *last index **N** plus 1* to maintain the compact array = complete binary tree property. However, the Max Heap property *may* still be violated. This operation then fixes Max Heap property from the insertion point **upwards** (if necessary) and stop when there is no more Max Heap property violation.
+
+- 将新项 v 插入到最大二叉堆中只能在最后一个索引 N 加 1 处完成 (N+1)，以保持紧凑数组 = 完整二叉树属性。
+- 然而，最大堆属性仍然可能被违反。因此需要从插入点向上修复最大堆属性。
+  - 向上修复最大堆属性被称为`ShiftUp`, `BubbleUp`或`IncreaseKey`
+- 时间复杂度=$O(log\ N)$
+
+### `create(A)` ($O(N\ log\ N)$)
+
+**Create(A) - O(N log N)**: Simply insert (that is, by calling **Insert(v)** operation) all **N** integers of the input array into an initially empty Binary Max Heap one by one.
+
+**Analysis**: This operation is clearly O(**N** log **N**) as we call O(log **N**) **Insert(v)** operation **N** times. Let's examine the 'Sorted example' which is one of the hard case of this operation (Now try the Hard Case - O(N log N) where we show a case where **A = [1,2,3,4,5,6,7]** -- please be patient as this example will take some time to complete). If we insert values in increasing order into an initially empty Binary Max Heap, then every insertion triggers a path from the insertion point (a new leaf) upwards to the root.
+
+将输入数组的所有 N 个整数一一插入（即通过调用 Insert(v) 操作）到最初为空的最大二叉堆中
+
+### `create(A)` ($O(N)$)
+
+**Create(A) - O(N)**: This faster version of **Create(A)** operation was invented by Robert W. Floyd in 1964. It takes advantage of the fact that a compact array = complete binary tree and all leaves (i.e., half of the vertices — see the next slide) are Binary Max Heap by default. This operation then fixes Binary Max Heap property (if necessary) only from the last internal vertex back to the root.
+
+**Analysis**: A loose analysis gives another O(**N**/2 log **N**) = O(**N** log **N**) complexity but it is actually just O(2***N**) = O(**N**) — details in the next few slides. Now try the Hard Case - O(N) on the same input array **A = [1,2,3,4,5,6,7]** and see that on the same hard case as with the previous slide (but not the one that generates maximum number of swaps — try 'Diagonal Entry' test case by yourself), this operation is far superior than the O(**N** log **N**) version.
+
+- 即从数组长度的一半位置开始修复(`len(A)/2`)，递减直到第一个索引
+
+### `ExtractMax()`
+
+- 取出最大堆中最大的数值，对于一个合法的最大堆，为root节点。
+
+- 将索引最后一位元素提升至root节点，并向下修复最大堆属性
+
+  - 被称为`ShiftDown`, `BubbleDown`或`Heapify`，具体操作如下：
+
+  1. 将索引最后一位元素提升至root节点
+  2. 将root节点和其两个子节点中**较大的值**作比较，如果符合条件则替换
+  3. 重复第二步骤，逐步向下修复最大堆属性
+
+- 时间复杂度为$O(log\ N)$
+
+### `UpdateKey(i, newv)`
+
+For some Priority Queue applications (e.g., [HeapDecreaseKey in Dijkstra's algorithm](https://visualgo.net/en/heap/sssp?slide=7-3)), we may have to modify (increase or decrease) the priority of an existing value that is already inserted into a Binary (Max) Heap. If the index **i** of the value is known, we can do the following simple strategy: Simply update **A[i] = newv** and then call **both** **shiftUp(i)** and **shiftDown(i)**. Only at most one of this Max Heap property restoration operation will be successful, i.e., **shiftUp(i)**/**shiftDown(i)** will be triggered if **newv** >/< old value of **A[parent(i)]**/**A[larger of the two children of i]**, respectively.
+
+- 如果值的索引`i`已知，则可以直接更新`A[i]=newv`
+- 然后向上和向下修复最大堆属性
+- 在知道索引的情况下，时间复杂度为$O(log/ N)$
+
+### `Delete(i)`
+
+1. 将该索引的值提升至root节点的值+1，使其成为最大堆中最大的数
+2. 向上修复最大堆属性`ShiftUp`
+3. 进行`ExtractMax()`操作
+
+- 时间复杂度为$O(log\ N)$
+
+## Key Point
+
+- 判断一个最大堆是否合法的条件为，判断一个内部节点的是否大于其所有（一个或者两个）子节点
+- 向最大堆中插入元素时，将元素插入到堆的末尾（即索引的最后一位），随后向上修复最大堆属性
+- **MAXimum** number of **comparisons** between heap elements required to construct a max heap of 10 elements using the **O(n)** BuildHeap: $C=1.5N$ (rounding) (10 elements = 15, 11 elements = 16, 12 element = 16)
+- Maximum number of swaps to construct max heap of N elements using $O(N)$: (N=9, 7) (N=10, 8) (N=11, 9) (N=12, 10)
 
 # 4 - Hash Table
 
@@ -708,7 +774,58 @@ This quadratic probing, the probe jumps quadratically, wrapping around the Hash 
 
 ## 4.9 Separate Chaining
 
+Try Insert([9,16,23,30,37,44]) to see how Insert(v) operation works if we use Separate Chaining as collision resolution technique. On such random insertions, the performance is good and each insertion is clearly O(**1**).
+尝试 Insert([9,16,23,30,37,44]) 看看如果我们使用分离链接作为冲突解决技术，Insert(v) 操作如何工作。在这种随机插入中，性能良好，并且每次插入显然都是 O(1)。
 
+
+
+However if we try Insert([68,90]), notice that all Integers {68,90} are 2 (modulo 11) so all of them will be appended into the (back of) Doubly Linked List 2. We will have a long chain in that list. Note that due to the screen limitation, we limit the length of each Doubly Linked List to be at maximum 6.
+然而，如果我们尝试 Insert([68,90])，请注意所有整数 {68,90} 都是 2（模 11），因此所有它们都将被追加到双向链表 2（的后面）中。我们将得到一个该列表中的长链。请注意，由于屏幕限制，我们将每个双向链表的长度限制为最大 6。
 
 ## 4.10 Extras
+
+
+
+## Key Points
+
+- Open Addressing (Linear Probing): 
+  - 当发生哈希冲突时，向后寻找下一个空/已删除的槽位
+  - 如果到达槽位末尾，则下一个寻找的目标为第一个槽位
+  - 删除操作时，将该槽位设置为DEL，以防止在搜索时失去哈希冲突之连续性
+  - “主簇”（Primary Clustering）是指连续的已占用槽位形成的一组，大的主簇会显著增加Hashmap操作的时间复杂度
+- Closed Addressing (Separate Chaining): 
+  - 当发生碰撞时，即两个键散列到相同的索引时，冲突会通过将值存储到表外来解决(对于Separate Chaining来说时DLL)。
+
+| 控制字符 | ASCII值 | 控制字符 | ASCII值 |
+| -------- | ------- | -------- | ------- |
+| A        | 65      | a        | 97      |
+| B        | 66      | b        | 98      |
+| C        | 67      | c        | 99      |
+| D        | 68      | d        | 100     |
+| E        | 69      | e        | 101     |
+| F        | 70      | f        | 102     |
+| G        | 71      | g        | 103     |
+| H        | 72      | h        | 104     |
+| I        | 73      | i        | 105     |
+| J        | 74      | j        | 106     |
+| K        | 75      | k        | 107     |
+| L        | 76      | l        | 108     |
+| M        | 77      | m        | 109     |
+| N        | 78      | n        | 110     |
+| O        | 79      | o        | 111     |
+| P        | 80      | p        | 112     |
+| Q        | 81      | q        | 113     |
+| R        | 82      | r        | 114     |
+| S        | 83      | s        | 115     |
+| T        | 84      | t        | 116     |
+| U        | 85      | u        | 117     |
+| V        | 86      | v        | 118     |
+| W        | 87      | w        | 119     |
+| X        | 88      | x        | 120     |
+| Y        | 89      | y        | 121     |
+| Z        | 90      | z        | 122     |
+
+# 5 - Binary Search Tree
+
+## Key Points
 
