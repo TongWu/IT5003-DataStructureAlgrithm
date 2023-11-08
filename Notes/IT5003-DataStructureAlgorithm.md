@@ -432,6 +432,9 @@ For some Priority Queue applications (e.g., [HeapDecreaseKey in Dijkstra's algor
 - 向最大堆中插入元素时，将元素插入到堆的末尾（即索引的最后一位），随后向上修复最大堆属性
 - **MAXimum** number of **comparisons** between heap elements required to construct a max heap of 10 elements using the **O(n)** BuildHeap: $C=1.5N$ (rounding) (10 elements = 15, 11 elements = 16, 12 element = 16)
 - Maximum number of swaps to construct max heap of N elements using $O(N)$: (N=9, 7) (N=10, 8) (N=11, 9) (N=12, 10)
+- An array A of n distinct integers that are sorted in descending order forms a valid Binary Max Heap. Assume that A[0] is not used and the array values occupy index [1:n].
+- Given a Binary Max Heap, calling ShiftDown(i) ∀i > heapsize/2 will never change anything in the Binary Max Heap.
+- 
 
 # 4 - Hash Table
 
@@ -829,3 +832,56 @@ However if we try Insert([68,90]), notice that all Integers {68,90} are 2 (modul
 
 ## Key Points
 
+- BST(二分搜索树)中，某个顶点的左侧子树中的每个顶点必须小于该顶点值，而右侧子树中的每个顶点则必须大于该定点值
+
+- Leaf Vertex：没有子顶点的顶点。Internal Vertex：有子顶点的顶点（root节点除外）
+
+- Insert, Search, Remove操作都从root节点开始遍历，判断要插入/搜索/删除的值大于或小于当前节点
+
+- Successor: 下一个比目标节点大的值。从左往右看BST，为目标节点的右边一个节点（无论上下）
+
+- Predecessor: 上一个比目标节点小的值。从左往右看BST，为目标节点的左边一个节点（无论上下）
+
+- Traversal：分为三种方式, Inorder, Preorder, Postorder
+
+  ![image-20231107171436300](https://images.wu.engineer/images/2023/11/07/image-20231107171436300.png)
+
+  - Inorder:
+
+    1. 优先遍历root节点的左侧子树，在节点没有左侧和右侧字数的情况下访问该节点(5)
+    2. 返回**并访问**至上一个节点(16)
+    3. 遍历右侧的子节点，访问最底部节点(28)
+    4. 循环执行步骤2，3
+    5. 返回至root节点并访问(31)
+    6. 遍历root节点的右侧子树，同时优先遍历右侧中的左侧子树
+    7. 循环执行步骤2，3
+
+    - 访问顺序: 5 -> 16 -> 28 -> 31 -> 49 -> 74 -> 99
+
+  - Preorder:
+
+    - 遍历顺序与inorder一致
+    - 但是在遍历时就访问该节点，例如从root节点开始，故root节点被第一个访问
+    - 访问顺序: 31 -> 16 -> 5 -> 28 -> 74 -> 49 -> 99
+
+  - Postorder:
+
+    - 遍历顺序与inorder一致
+    - 但是在遍历时，只有在**当前节点没有子节点，或所有子节点都被访问过之后，才访问该节点**
+    - 访问顺序: 5 -> 28 -> 16 -> 49 -> 99 -> 74 -> 31
+
+- How many structurally different BSTs can you form with **n distinct** elements?
+  $$
+  \begin{aligned}
+  C_n &= \frac 1 {n+1} {2n \choose n} = \frac {(2n)!} {(n+1)!\times n!} \\
+  \end{aligned}
+  $$
+
+- What is the value of the element with **rank n** in this BST?
+
+  - 从左往右看BST，为从左往右数的第N个节点（无论上下）
+
+- What is the **minimum** possible height of a **BST** with **N** elements?
+  $$
+  \lfloor log_2N \rfloor
+  $$
