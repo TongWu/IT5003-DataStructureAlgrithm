@@ -1,0 +1,33 @@
+After many years without any public transport, the town Krockholm will finally get a network of bus lines. The plans are still on the drawing board, but it has been decided that there shall be n stations labelled 1 to n, and m bus lines where each line connects two stations. The only thing remaining is to decide which pairs of stations should be connected. One important requirement is that it should be possible to get from any station to any other. In addition to this, someone had the brilliant idea that the bus lines should be labelled by the sum of their endpoints. This means that all of these sums must be different.
+
+You are given two integers n and m. Construct a graph with m edges and n vertices labelled 1 to n, such that:
+
+1. The graph is connected.
+
+2. The sums of edge endpoints are distinct.
+
+Input
+The input consists of a single line containing two integers n and m (2 <= n <= 100, 1 <= m <= 10^4).
+
+Output
+If it is not possible to construct a graph with the given properties, print “-1”. Otherwise, print m lines where the i’th line contains two integers a_i, b_i, the endpoints of the i’th edge. If there are many possible solutions, any one of them will be accepted.
+
+Sample Input 1
+4 4
+Sample Output 1
+2 1
+2 3
+4 3
+4 2
+
+Sample Input 2
+10 100
+Sample Output 2
+-1
+
+Sample Input 3
+10 1
+Sample Output 3
+-1
+
+Hint: There are many possible construction strategies but we just need to find the easiest that works. To ensure a connected graph, we need to insert at least one spanning tree of the n vertices. The easiest is to connect vertex 1 to everything else (the sums of edge endpoints will also be distinct). Then for the second criteria, we can keep adding all other possible edge pairs if and only if we have not seen the edge sums before (what data structure is good for checking this?).
