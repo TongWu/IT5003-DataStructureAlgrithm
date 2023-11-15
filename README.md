@@ -1,8 +1,8 @@
 # IT5003 - Data Structures and Algorithms
 
-> ## Assignments (PSes)
-> - All problems in `Assignment` folder is not visible until the deadline of that PS is passed.
-> - Although problems in each PS is different every year, there may have few similar problems. Trying to copy codes from `Assignment` folder to your own assignment (PSes) problem will be considered as plagiarism by Kattis and course staff team. Assignments (PSes) that judged as plagiarized will receive a zero mark, as will for the subsequent assignments.
+## Important: Assignments (PSes)
+- All problems in `Assignment` folder is not visible until the deadline of that PS is passed.
+- Although problems in each PS is different every year, there may have few similar problems. Trying to copy codes from `Assignment` folder to your own assignment (PSes) problem will be considered as plagiarism by Kattis and course staff team. Assignments (PSes) that judged as plagiarized will receive a zero mark, as will for the subsequent assignments.
 
 ## 1. Introduction
 
