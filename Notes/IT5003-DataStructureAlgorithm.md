@@ -885,3 +885,256 @@ However if we try Insert([68,90]), notice that all Integers {68,90} are 2 (modul
   $$
   \lfloor log_2N \rfloor
   $$
+# 6 - Graph Structures
+- Graph can be:
+	- **undirected**: no distinction between two vertices associated with each bidirectional edge
+	- **directed**: edges are directed from one vertex to another but may not directed from another direction
+## 6.1 Simple Graph
+- In simple graph:
+	- no **self-loop edge**: edge that connects with itself
+	- no **multiple/parallel edges**: edges between the same pair of vertices
+	- There can only be **up to one edge** between a pair of distinct vertices.
+- The *maximum number* of edges $E$ in a simple graph is $O(V^2)$
+## 6.2 Terminologies
+- **Incident and adjacent 相连和相邻**
+	- Undirected edge $e: (u, v)$ is said to be **incident** (相连) with its two end-point vertices $u$ and $v$. 
+	- Two vertices are called **adjacent** (相邻) (or neighbour) if they are incident with a common edge. For example, edge (0, 2) is incident to vertices 0 and 2, and vertices 0 and 2 are adjacent.
+- **Adjacent edges 相邻边**
+	- Two edges are called **adjacent** if they are incident with a **common vertex**. For example, edge (0, 2) and edge (2, 4) are adjacent.
+- **Degree 顶点的度**
+	- The **degree** of a vertex $v$ in an undirected graph is the number of edges incident with $v$. 
+- **Subgraph 子图**
+	- A **subgraph** $G'$ of graph $G$ is a smaller graph that contains subset of vertices and edges of $G$
+	- 子图中的所有顶点都在原图的顶点集中，子图的所有边都在原图的边集中
+- **Path and path length 路径和路径长度**
+	- The **path** is a set of multiple edges from a specific vertex to another specific vertex. 
+	- The **path length** is the number of vertex in the path. 
+- **Simple path 简单图**
+	- If there is no repeated vertex along the path, we call it as a **simple path**
+- **Connected Graph 连通图**
+	- An undirected graph $G$ is called **connected** if there is a path between every pair of distinct vertex of $G$
+- **Connected Component 连通成分**
+	- An undirected graph $C$ is called a **connected component** of the undirected graph $G$ if:
+		1. $C$ is a subgraph of $G$
+		2. $C$ is connected
+		3. $C$ is the maximal subgraph that satisfies the other two criteria
+- **Cut vertex/bridge 割点/桥**
+	- A vertex/bridge that increase the graph's number of connected components if this vertex/bridge is deleted
+	- 指在一个无向图中的一个顶点，当我们移除这个顶点以及与它相连的边后，原本连通的图变成了不连通的，即这个顶点的移除增加了图的连通分量的数量。
+- **Adjacent for directed edge 有向边中的相邻顶点**
+	- Suppose a *directed* edge $e: (u\to v)$, we say that $v$ is *adjacent to* $u$ but not in the other direction
+- **In-degree and Out-degree 有向边中的入度和出度**
+	- In-degree of $v$ is the number of edges coming into $v$
+	- Out-degree of $v$ is the number of edges going out from $v$
+- **Strongly Connected Component 有向图中的强连通成分
+	- A directed graph $G$ is called **strongly connected** if there is a path *in each direction* between every pair of distinct vertices of $G$
+	- A directed graph $SCC$ is called a **strongly connected component** of the directed graph $G$ if:
+		1. $SCC$ is a subgraph of $G$
+		2. $SCC$ is *strongly* connected
+		3. No connected subgraph of $G$ has $SCC$ has a subgraph and contains vertices or edges that are not in $SCC$
+			- i.e., $SCC$ is the maximal subgraph that satisfies the other two criteria
+- **Cycle 循环**
+	- A **cycle** is a path that starts and ends with the *same vertex*
+- **Acyclic Graph 无循环图**
+	- An **acyclic graph** is a graph that not contains any *cycle*
+- **Trivial Cycle 平凡环**
+	- In an *undirected graph*, each of its undirected edge causes a **trivial cycle** of length 2, we will not classify it as a cycle
+- **Directed Acyclic Graph (DAG) 有向无环图**
+	- A *directed graph* which is not acyclic has a special name: **directed acyclic graph (DAG)**
+## 6.2 Special Graphs
+### Tree
+- Tree is a **connected graph** with $V$ vertices and $E=V-1$ edges
+- **Acyclic**: does not contain any cycle
+- Has *one unique path* between any pair of vertices
+- Tree is usually defined on **undirected graph**
+- Tree with one of its vertex designated as *root vertex* is called a **rooted tree**
+- In a **rooted tree**, we have the concept of hierarchies (parent, children, ancestors, descendants), subtrees, levels, and height.
+	- **Parent 父节点**
+		- 每个节点（除了根节点）都有一个直接相连的上级节点称为其父节点
+	- **Children 子节点**
+		- 任何节点的直接下级节点称为它的子节点
+	- **Ancestors 祖先**
+		- 从根节点到达某个节点所经过的所有节点，**包括该节点本身**，都是这个节点的祖先
+	- **Descendants 后代**
+		- 任何节点下方的所有节点（无论距离多远）都是该节点的后代
+	- **Subtrees 子树**
+		- 任何节点**和**它的后代节点，连同它们之间的边，一起构成一个子树
+	- **Levels 层**
+		- 根节点位于第一层，其子节点位于第二层，以此类推。某个节点的层级数是从根节点到该节点的唯一路径上的边的数量加一
+	- **Height 高**
+		- 树的高度是树中任何节点的最大层级数。等价地，也可以定义为从该节点到其任何叶节点的最长路径的长度
+- **Binary Tree** is a *rooted tree* in which a vertex has at most two children that are named *left child* and *right child*
+- A **full binary tree** is a binary tree in which each non-leaf (also called internal) vertex has *exactly two children*
+- A **complete binary tree** is a binary tree in which every level is completely filled, except possibly the last level may be filled as far *left* as possible.
+
+### Complete Graph
+- **Complete Graph** is a graph that there is an edge between *any* pair of vertices
+- Complete graph is the *most dense* simple graph
+
+### Bipartite Graph
+- **Bipartite Graph** is an undirected graph with $V$ vertices that can be partitioned into two adjacent set of vertices of size $m$ and $n$ where $V=m+n$. 
+- There is no edge between members of the same set.
+- Bipartite graph is free from odd-length cycle
+- Bipartite graph can be *complete*, i.e., all $m$ vertices from one disjoint set are connected to all $n$ vertices from the other disjoint set
+- A *tree* is also a *bipartite graph*.
+
+### DAG
+- **Directed Acyclic Graph (DAG)** is a directed graph that has no cycle
+
+## 6.3 Data Structures
+### Adjacency Matrix, AM
+- **Adjacency Matrix** is a square matrix where `AM[i][j]` shows the edge's weight from vertex `i` to `j`. For unweighted graphs, set unit weight =1 for all edge weights
+- Usually set `AM[i][j]=0` to indicate there is no edge for $(i, j)$. However, if the graph contains 0-weighted edge, we have to use another symbol to indicate "no edge", like `-1, None, null`
+- Use `VxV` 2D array/list to implement this data structure
+
+- AM requires space complexity of $O(V^2)$
+
+### Adjacency List, AL
+- **Adjacency List** is an array of $V$ lists, each vertex has a list or hash table. The list/hash table contains all other vertices that directly connected to this vertex.
+- AL has space complexity of $O(V+E)$, far more efficient than AM
+- AL is *efficient* especially for sparse graph (稀疏图)
+
+### Edge List, EL
+- **Edge List** is a collection of edges with both connecting vertices and their weights
+- These edges are sorted by increasing weight
+- 边列表（Edge List）是表示图的一种简单数据结构，它直接列出了图中所有的边。每条边由一对顶点表示，这对顶点说明了图中的两个顶点之间存在连接。
+- 在无权图中，边列表是一个二元组的列表，每个二元组包含两个顶点。例如，边 (u,v) 表示顶点 u 和顶点 v 之间有一条边。
+- 在有权图中，边列表通常是一个三元组的列表，每个三元组包含两个顶点以及这两个顶点之间边的权重。例如，边 (u,v,w) 表示顶点 u 和顶点 v 之间有一条权重为 w 的边。
+
+## 6.4 Quiz related
+- Connected: all vertices is accessible form any vertex
+- Neighbour (adjacent): vertices directly connected to the specific vertex
+- Complete Graph: has edge for any pair of vertices
+- Tree: 
+	- Tree is a **connected graph** with $V$ vertices and $E=V-1$ edges
+	- **Acyclic**: does not contain any cycle
+	- Has *one unique path* between any pair of vertices
+- DAG: No cycle, directed
+
+- Entries of *edge list*: number of edges
+- Number of *filled cells* of *adjacency matrix*: $N_{\text{vertices}}^2 - N_{\text{edges}}\times 2$
+- Entries of *adjacency list*: each vertex's list contains the direct connected vertices
+- Suitable DS for different situation:
+	- AM:
+		- Dense graph, number of edge approx the square of edges
+		- Frequently check existence of edge between two vertices
+		- Space complexity $O(n^2$)
+	- AL:
+		- Sparse graph, number of edges far smaller than the square of edges
+		- Frequently check the neighbours of specific vertex
+		- Space complexity $\approx 2e$
+		- For limited RAM
+	- EL:
+		- For small number of edges
+		- For limited RAM
+		- Simple graph structure
+		- Space complexity $e$
+		- Frequently check all edges (include sorting)
+
+# 7 - DFS & BFS
+## 7.1 DFS
+- DFS takes one input param: the source vertex `s`
+- Trying all options:
+	1. If DFS is at a vertex `u` and it has `X` neighbours, it will pick the first neighbour $V_1$ (usually the vertex with the smallest vertex number)
+	2. Recursively explore all reachable vertices from vertex $V_1$, and backtrack to vertex $u$
+	3. Do the same process (step 1 and 2) for all neighbours, until it finishes exploring the last neighbour $V_x$ and its reachable vertices
+- Use an array `status[u]` to record the vertex $u$ is visited or not
+- Use another array `p[u]` of size $V$ vertices to remember the parent/predecessor/previous of each vertex $u$ along the DFS traversal path
+	- For source vertex $s$, `p[s]` is set to `-1` since the source vertex has no predecessor
+- Time complexity is $O(V+E)$
+	- Each vertex is only visited once due to the fact that DFS will only recursively explore a vertex $u$ if `status[u] = unvisited`, which takes $O(V)$ time
+	- Every time a vertex is visited, all its $k$ neighbours are explored and therefore after all vertices are visited, we have examined all $E$ edges, which takes $O(E)$ time
+1. 从一个选定的源节点开始，将其标记为“已访问”，并将其放入栈中。
+2. 取栈顶元素为当前节点，探索当前节点的一个未访问的邻居节点。
+3. 将新发现的节点标记为“已访问”并放入栈中。
+4. 如果当前节点没有未访问的邻居节点，则将它从栈中弹出（回溯）。
+	- 这意味着如果重复步骤，则在步骤2选定的节点为该节点的上一个节点
+5. 重复步骤2到4，直到栈为空，或者找到目标节点，或者遍历完所有可达的节点。
+
+DFS算法的特点是尽可能深地搜索树的分支，这个特性使得DFS在某些情况下比广度优先搜索（BFS）更加高效，比如在寻找解决方案的路径比较深的问题中。此外，DFS算法的空间复杂度通常较低，因为它不需要存储所有层的节点，只需要维护一个栈的空间即可。
+## 7.2 BFS
+- BFS take one input param: the source vertex `s`
+- BFS start from a source vertex `s` but is uses a queue to order the vistation sequence as *breadth* as possible before going deeper
+- BFS also uses a Boolean array of size $V$ vertices to distinguish between two states: visited and unvisited vertices
+- Time complexity is $O(V+E)$
+	- Each vertex is only visited once as it can only enter the queue once, which takes $O(V)$ time
+	- Every time a vertex is dequeued from the queue, all its $k$ neighbours are explored and therefore after all vertices are visited, we examined all $E$ edges, which takes $O(E)$ time
+1. **初始化**：首先将根节点放入队列中。
+2. **循环遍历**：只要队列不为空，就重复以下步骤：
+    - 从队列的前端取出一个节点。
+    - 检查它是否为目标。如果找到目标，则搜索结束。
+    - 如果它不是目标，则将该节点的所有未访问的邻接点加入队列，并标记这些邻接点为已访问。
+3. **访问节点**：对于队列中的每个节点，访问该节点，并检查它是否是目标节点。如果是，则结束搜索并返回结果。如果不是，则将其所有未被访问过的邻居节点加入队列。
+4. **标记已访问**：在加入队列的同时，应该将节点标记为已访问，以防止将节点重复加入队列。
+5. **重复**：重复步骤2，直到找到目标节点或队列为空，队列为空意味着整个图已经搜索完毕，没有找到目标。
+
+BFS算法的特点在于它提供了最短路径的保证，即第一次找到目标节点时的路径是从根节点到目标节点的最短路径。这个特性使得BFS特别适合解决最短路径或最少步骤的问题。
+## 7.3 Applications
+### Reachability test
+- Call `DFS(s)` or `BFS(s)` to check if `status[t] = visited`
+### Print the Traversal Path
+- For DFS, print each node when a node is marked as visited
+	- i.e., print node once explore to it
+- For BFS, print each node when dequeue a node
+	- i.e., print node once it is get out form the queue to explore
+### Identifying a Connected Component (CC)
+- Call `DFS(s)` or `BFS(s)` to enumerate all vertex $v$ that has `status[v] = visited`
+### Counting the number of Connected Component
+```Python
+CC = 0
+for all u in V:
+	status[u] = unvisited
+for all u in V:
+	if (status[u] == unvisited):
+		CC += 1
+		DFS(u) # DFS will visit all nodes connected to this source node
+print(CC)
+```
+## 7.4 Detect Cycle in DFS
+- Let array `status[u]` to record three different status:
+	- **unvisited**: DFS has not reach the vertex $u$
+	- **explored**: DFS is visited the vertex $u$, and there is at least one neighbour for vertex $u$ is not visited
+		- i.e., this vertex is still be deepening by DFS
+	- **visited**: DFS is visited the vertex $u$ and its all neighbours
+- If DFS is now at vertex $x$ and explore edge $x\to y$ and encounter `status[y] = explored`, it means a cycle has been found
+## 7.5 Topological Sort for DFS
+- When dequeue a node, add this node to the list
+- After add all node to the list, reverse the list
+![image.png](https://images.wu.engineer/images/2023/11/24/202311241301218.png)
+
+## 7.6 Quiz Related
+- Bipartite Graph 二分图
+	- 将图分为两个集合，只有集合之间存在边，集合内部没有边
+		![image.png](https://images.wu.engineer/images/2023/11/24/202311241315959.png)
+- Simple Path 简单路径
+	- 即路径上没有重复的节点
+- Edges that make up the spanning tree 构成生成树的边
+	- 从源点开始DFS/BFS，遍历节点经过的边可以作为构成生成树的边
+	- 除了能够构成环的边（即除了到达已经访问过的节点的边）
+- Edges that must belongs to every spanning tree
+	- 只有单个度的节点的边
+- Number of spanning tree of a complete graph with $N$ vertices
+	- $T = N^{N-2}$
+- Running time for DFS and BFS in different graph structure
+	- Connected Graph (not complete): $O(V+E)$
+	- Complete Graph: $O(V^2)$
+	- Bipartite Graph: $O(V^2)$, worst $O(V+E)
+	- DAG: $O(V^2)$, worst $O(V+E)
+	- Tree: $O(V)$
+	- Acyclic Graph: $O(V+E)$
+- Tree
+	- 无环
+	- 从一个节点到另一个节点只有一条唯一的路径
+- Topological Sort 拓扑排序
+	- When dequeue a node, add this node to the list
+	- After add all node to the list, reverse the list
+- Strongly Connected Component
+	- 每个顶点都可以通过有向路径到达分量中的任何其他顶点
+	- 每个节点只属于一个强连通分量
+	- 强连通分量是该节点区域内最大的一个子图
+	- 单节点也是强连通分量
+# 8 - Single-Source Shortest Paths (SSSP)
+- SSSP has two input:
+	1. A directed weighted graph
+
+## 8.1 Quiz Related
