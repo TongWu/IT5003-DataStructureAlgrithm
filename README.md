@@ -5,7 +5,7 @@
 - Although problems in each PS is different every year, there may have few similar problems. Trying to copy codes from `Assignment` folder to your own assignment (PSes) problem will be considered as plagiarism by Kattis and course staff team. Assignments (PSes) that judged as plagiarized will receive a zero mark, as will for the subsequent assignments.
 
 ## Important: Book <Competitive Programming 4> - Book 1 & 2
-The Book is avaliable in online store which has a link in Prof's website. The book resources are paid and copyrighted, so I will not push or accept any commits/pull requests about the books. However, some contents/slides of the book may appear in cheatsheets, quizs preparation and the final exam preparation folder. **If some contents offend the copyright holder, please contact me to remove the content.**
+The Book is avaliable in online store which has a link in Prof's website. The book resources are paid and copyrighted, so I will not push or accept any commits/pull-requests about the books. However, some contents/slides of the book may appear in cheatsheets, quizs preparation and the final exam preparation folder. **If some contents offend the copyright holder, please contact me to remove the content.**
 
 ## 1. Introduction
 
