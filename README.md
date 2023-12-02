@@ -21,8 +21,6 @@ The Book is avaliable in online store which has a link in Prof's website. The bo
 
 - You can share, copy and distribute the **limited content** in this repo, including the personal organised contents like notes, cheatsheets, assignments answer.
   - However, you are **strongly discouraged** to use, reference, even copy the personal organised contents for personal use. The study itself is a self-organisation and participation progress so it is important to do assignment and organise knowledge by yourself.
- 
-- You **cannot** share, copy, and distribute the copyrighted contents in this repo, include but not limited to class slides, pastpaper, lab paper, pastpaper without the copyright holder's (often the University, School of Computing, and the Professor) premission .
 
 ### 1.2 Notes
 
