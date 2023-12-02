@@ -7,9 +7,7 @@
 ## Important: Book <Competitive Programming 4> - Book 1 & 2
 The Book is avaliable in online store which has a link in Prof's website. The book resources are paid and copyrighted, so I will not push or accept any commits/pull-requests about the books. However, some contents/slides of the book may appear in cheatsheets, quizs preparation and the final exam preparation folder. **If some contents offend the copyright holder, please contact me to remove the content.**
 
-## 1. Introduction
-
-### 1.1 Disclaimer and References
+## Disclaimer and References
 
 - This repo is the self-organized warehouse for National University of Singapore, School of Computing, Course IT5003: Data Structures and Algorithms.
 
@@ -22,6 +20,6 @@ The Book is avaliable in online store which has a link in Prof's website. The bo
 - You can share, copy and distribute the **limited content** in this repo, including the personal organised contents like notes, cheatsheets, assignments answer.
   - However, you are **strongly discouraged** to use, reference, even copy the personal organised contents for personal use. The study itself is a self-organisation and participation progress so it is important to do assignment and organise knowledge by yourself.
 
-### 1.2 Notes
+## Notes
 
 The self-orgnised note can be found at [this link](https://wiki.wu.engineer/NationalUniversityOfSingapore/IT5003-DataStructureAlgorithm), or navigate to the 'Notes' folder in this repo.
