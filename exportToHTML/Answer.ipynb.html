@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>Answer.ipynb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #8c8c8c; font-style: italic;}
+.s1 { color: #080808;}
+.s2 { color: #1750eb;}
+.s3 { color: #0033b3;}
+.s4 { color: #067d17;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Answer.ipynb</font>
+</center></td></tr></table>
+<pre><span class="s0">#%% md 
+</span><span class="s1">## Part A 
+</span><span class="s0">#%% 
+# A-Q0</span>
+<span class="s1">n = int(input())</span>
+<span class="s0">### print the sum of even integers in [0/1/../n-1]</span>
+<span class="s0"># answer for A-Q0 should be:</span>
+<span class="s1">print(sum(range(</span><span class="s2">0</span><span class="s1">, n, </span><span class="s2">2</span><span class="s1">)))</span>
+<span class="s0"># the time complexity is O(n), range and sum goes through n (over 2) integers</span>
+<span class="s0">#%% 
+# A-Q1, Sample Input = &quot;1 4 2 6 9 5 3 8 7 10&quot;, Sample Output = &quot;8&quot;</span>
+<span class="s1">L = [</span><span class="s2">1</span><span class="s1">,</span><span class="s2">4</span><span class="s1">,</span><span class="s2">2</span><span class="s1">,</span><span class="s2">6</span><span class="s1">,</span><span class="s2">9</span><span class="s1">,</span><span class="s2">5</span><span class="s1">,</span><span class="s2">3</span><span class="s1">,</span><span class="s2">8</span><span class="s1">,</span><span class="s2">7</span><span class="s1">,</span><span class="s2">10</span><span class="s1">,</span><span class="s2">7</span><span class="s1">] </span><span class="s0"># there are n (7 &lt;= n &lt;= 100000) integers in L</span>
+<span class="s0">### print the first (0-based) index in L with value 7</span>
+<span class="s1">print(L.index(</span><span class="s2">7</span><span class="s1">))</span>
+<span class="s0">#%% 
+# A-Q2, Sample Input = &quot;1 4 2 6 9 5 3 8 7 10&quot;, Sample Output = &quot;[9, 8, 7, 10]&quot;</span>
+<span class="s1">L = list(map(int, input().split())) </span><span class="s0"># there are n (7 &lt;= n &lt;= 100000) integers in L</span>
+<span class="s0">### update list L by removing integers in L that is &lt; 7, but preserve the order</span>
+<span class="s1">L = [n </span><span class="s3">for </span><span class="s1">n </span><span class="s3">in </span><span class="s1">L </span><span class="s3">if </span><span class="s1">n &gt;= </span><span class="s2">7</span><span class="s1">]</span>
+<span class="s1">print(L)</span>
+<span class="s0">#%% 
+# A-Q3, Sample Input = &quot;1 4 2 6 9 5 3 8 7 10&quot;, Sample Output = &quot;4,5,6,7,8,9,10&quot;</span>
+<span class="s1">L = list(map(int, input().split())) </span><span class="s0"># there are n (7 &lt;= n &lt;= 100000) integers in L</span>
+<span class="s1">L.sort()</span>
+<span class="s0">### print seven largest integers in L (comma separated, no [], non-decreasing)</span>
+<span class="s1">print(L[-</span><span class="s2">7</span><span class="s1">:])</span>
+<span class="s0">#%% 
+# A-Q4, Sample Input = &quot;1 4 2 6 9 5 3 8 7 10&quot;, Sample Output = &quot;4,5,6,7,8,9,10&quot;</span>
+<span class="s3">from </span><span class="s1">heapq </span><span class="s3">import </span><span class="s1">heapify, heappop</span>
+<span class="s0"># there are n (7 &lt;= n &lt;= 100000) integers in PQ</span>
+<span class="s1">PQ = list(map(</span><span class="s3">lambda </span><span class="s1">x: -int(x), </span><span class="s4">&quot;1 4 2 6 9 5 3 8 7 10&quot;</span><span class="s1">.split())) </span><span class="s0"># store negative x instead</span>
+<span class="s1">heapify(PQ) </span><span class="s0"># __doc__ ’Transform list into a heap, in-place, in O(len(heap)) time.’</span>
+<span class="s0">### print seven largest integers in PQ (comma separated, no [], non-decreasing)</span>
+<span class="s1">print(</span><span class="s4">&quot;,&quot;</span><span class="s1">.join(map(str, sorted([-heappop(PQ) </span><span class="s3">for </span><span class="s1">_ </span><span class="s3">in </span><span class="s1">range(</span><span class="s2">7</span><span class="s1">)]))))</span>
+<span class="s0">#%% 
+# A-Q5, Sample Input = &quot;2 3 2 1 1 3 2 8 7 3 6&quot;, Sample Output = &quot;4,5,9&quot;</span>
+<span class="s0"># there are n (7 &lt;= n &lt;= 100000) integers in input, but each integer is in [1..9]</span>
+<span class="s1">s = set(map(int, input().split()))</span>
+<span class="s0">### print 1-digit integer(s) not in s (comma separated, no [], non-decreasing)</span>
+<span class="s1">print(</span><span class="s4">&quot;,&quot;</span><span class="s1">.join(map(str, [n </span><span class="s3">for </span><span class="s1">n </span><span class="s3">in </span><span class="s1">range(</span><span class="s2">1</span><span class="s1">,</span><span class="s2">10</span><span class="s1">) </span><span class="s3">if </span><span class="s1">n </span><span class="s3">not in </span><span class="s1">s])))</span>
+<span class="s0">#%% md 
+</span><span class="s1">## Part C 
+</span><span class="s0">#%% 
+# C1: Efficient Additions</span>
+<span class="s0">## Since we need to calculate the minimum cost of addition, so we need to optimise in each step</span>
+<span class="s0">## The optimisation is to add two smallest number in each step</span>
+<span class="s0">## The heapq (minimum heap) can do this</span>
+<span class="s3">import </span><span class="s1">heapq</span>
+<span class="s3">def </span><span class="s1">solution():</span>
+    <span class="s1">N = int(input())</span>
+    <span class="s1">M = list(map(int, input().split()))</span>
+    <span class="s1">total_cost = </span><span class="s2">0</span>
+    <span class="s1">heapq.heapify(M) </span><span class="s0"># heapify the list, let the smallest items on the top</span>
+    <span class="s3">while </span><span class="s1">len(M) &gt; </span><span class="s2">1</span><span class="s1">:</span>
+        <span class="s0"># Pop out two smallest number in first loop</span>
+        <span class="s0"># After first loop, pop out the cost and one smallest number</span>
+        <span class="s1">num1 = heapq.heappop(M)</span>
+        <span class="s1">num2 = heapq.heappop(M)</span>
+        <span class="s1">cost = num1 + num2</span>
+        <span class="s1">total_cost += cost</span>
+        <span class="s0"># Push back the cost</span>
+        <span class="s1">heapq.heappush(M, cost)</span>
+    <span class="s3">return </span><span class="s1">total_cost</span>
+<span class="s1">print(solution())</span>
+<span class="s0">#%% 
+# C2 - Subtask 1</span>
+<span class="s3">def </span><span class="s1">isValidPlan():</span>
+    <span class="s1">n = </span><span class="s2">5 </span><span class="s0"># Number of tasks</span>
+    <span class="s1">m = </span><span class="s2">3 </span><span class="s0"># Number of dependencies</span>
+    <span class="s1">dependencies = [(</span><span class="s2">1</span><span class="s1">,</span><span class="s2">2</span><span class="s1">), (</span><span class="s2">1</span><span class="s1">,</span><span class="s2">3</span><span class="s1">)]</span>
+    <span class="s1">plan = [</span><span class="s2">1</span><span class="s1">,</span><span class="s2">3</span><span class="s1">,</span><span class="s2">2</span><span class="s1">]</span>
+    <span class="s0">#Add dictionary for pre-requests for each task</span>
+    <span class="s1">prereq = {i: set() </span><span class="s3">for </span><span class="s1">i </span><span class="s3">in </span><span class="s1">range(</span><span class="s2">1</span><span class="s1">, n+</span><span class="s2">1</span><span class="s1">)}</span>
+    
+    <span class="s3">for </span><span class="s1">u, v </span><span class="s3">in </span><span class="s1">dependencies:</span>
+        <span class="s1">prereq[v].add(u)</span>
+    
+    <span class="s1">completed = set()</span>
+    <span class="s3">for </span><span class="s1">task </span><span class="s3">in </span><span class="s1">plan:</span>
+        <span class="s3">if not </span><span class="s1">prereq[task].issubset(completed):</span>
+            <span class="s1">print(</span><span class="s4">&quot;Invalid&quot;</span><span class="s1">)</span>
+            <span class="s3">return</span>
+        <span class="s1">completed.add(task)</span>
+    <span class="s1">print(</span><span class="s4">&quot;Go Ahead&quot;</span><span class="s1">)</span>
+    <span class="s3">return</span>
+<span class="s1">isValidPlan()</span>
+<span class="s0">#%% 
+# C2 - Subtask 2</span>
+<span class="s3">from </span><span class="s1">collections </span><span class="s3">import </span><span class="s1">deque</span>
+
+<span class="s3">def </span><span class="s1">find_valid_order(n, dependencies):</span>
+    <span class="s1">adj_list = {i: [] </span><span class="s3">for </span><span class="s1">i </span><span class="s3">in </span><span class="s1">range(</span><span class="s2">1</span><span class="s1">, n + </span><span class="s2">1</span><span class="s1">)}</span>
+    <span class="s1">in_degree = {i: </span><span class="s2">0 </span><span class="s3">for </span><span class="s1">i </span><span class="s3">in </span><span class="s1">range(</span><span class="s2">1</span><span class="s1">, n + </span><span class="s2">1</span><span class="s1">)}</span>
+
+    <span class="s0"># 填充邻接列表和入度列表</span>
+    <span class="s3">for </span><span class="s1">u, v </span><span class="s3">in </span><span class="s1">dependencies:</span>
+        <span class="s1">adj_list[u].append(v)</span>
+        <span class="s1">in_degree[v] += </span><span class="s2">1</span>
+
+    <span class="s0"># 使用 Kahn 算法进行拓扑排序</span>
+    <span class="s1">queue = deque([v </span><span class="s3">for </span><span class="s1">v </span><span class="s3">in </span><span class="s1">in_degree </span><span class="s3">if </span><span class="s1">in_degree[v] == </span><span class="s2">0</span><span class="s1">])</span>
+    <span class="s1">valid_order = []</span>
+
+    <span class="s3">while </span><span class="s1">queue:</span>
+        <span class="s1">vertex = queue.popleft()</span>
+        <span class="s1">valid_order.append(vertex)</span>
+
+        <span class="s3">for </span><span class="s1">neighbour </span><span class="s3">in </span><span class="s1">adj_list[vertex]:</span>
+            <span class="s1">in_degree[neighbour] -= </span><span class="s2">1</span>
+            <span class="s3">if </span><span class="s1">in_degree[neighbour] == </span><span class="s2">0</span><span class="s1">:</span>
+                <span class="s1">queue.append(neighbour)</span>
+
+    <span class="s3">if </span><span class="s1">len(valid_order) != n:</span>
+        <span class="s3">return </span><span class="s4">&quot;不存在有效排序&quot;</span>
+    <span class="s3">return </span><span class="s1">valid_order</span>
+
+<span class="s0"># 示例使用</span>
+<span class="s1">n = </span><span class="s2">5</span>
+<span class="s1">dependencies = [(</span><span class="s2">1</span><span class="s1">, </span><span class="s2">2</span><span class="s1">), (</span><span class="s2">2</span><span class="s1">, </span><span class="s2">3</span><span class="s1">), (</span><span class="s2">1</span><span class="s1">, </span><span class="s2">3</span><span class="s1">), (</span><span class="s2">3</span><span class="s1">, </span><span class="s2">4</span><span class="s1">), (</span><span class="s2">4</span><span class="s1">, </span><span class="s2">5</span><span class="s1">)]</span>
+<span class="s1">print(find_valid_order(n, dependencies))</span>
+<span class="s0">#%% 
+# C2 - Subtask 3</span>
+<span class="s3">def </span><span class="s1">subtask3():</span>
+    <span class="s3">if </span><span class="s1">isValidPlan():</span>
+        <span class="s3">return </span><span class="s4">&quot;Go Ahead&quot;</span>
+    <span class="s3">else</span><span class="s1">:</span>
+        <span class="s3">return </span><span class="s1">find_valid_order()</span></pre>
+</body>
+</html>
