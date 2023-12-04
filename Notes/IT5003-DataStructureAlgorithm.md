@@ -1134,7 +1134,225 @@ print(CC)
 	- 强连通分量是该节点区域内最大的一个子图
 	- 单节点也是强连通分量
 # 8 - Single-Source Shortest Paths (SSSP)
-- SSSP has two input:
-	1. A directed weighted graph
+- 在此问题中，我们需要在一个有向加权图中找到从特定的顶点到其他所有顶点的最短路径
+- SSSP算法中的输入为：
+	- 不一定相连的有向加权图G(V,E)
+	- 源顶点s
+- 输出为：
+	- 大小为 V 的数组 D（D 代表 "距离）
+		- 最初，如果 u = s，D[u] = 0；否则，D[u] = +∞
+		- 当我们找到更好（更短）的路径时，D[u]就会减少
+	- 大小为 V 的数组/矢量 p（p 代表 "父数组"/"前置数组"/"前一个数组"）
+		- p[u] = 从源节点 s 到 u 的最佳路径上的前置因子
+		- p[u] = NULL（未定义，我们可以使用-1 这样的值来表示）
+		- 该数组/向量 p 描述了生成的 SSSP 生成树
+## relax operation
+```Python
+def relax(u, v, w_u_v): 
+	if D[v] > D[u]+w_u_v: // if the path can be shortened 
+		D[v] = D[u]+w_u_v // 'relax' (update) the previous edge to shorter edge
+		p[v] = u // remember/update the predecessor
+```
+- 当我们找到了一个更短的路径时，我们需要进行relax/update 操作，将现有的路径替换(update/relax) 成更短的路径
+## Approaches
+- 我们可以对不同的图使用不同的算法来解决SSSP问题:
+	- Unweighted Graphs 无权图: **BFS** $O(V+E)$
+	- Graphs without negative weight 无负权图: **Dijkstra’s Algorithm** $O((V+E) logV)$
+	- Graph without negative cycle 无负权循环图: **Modified Dijkstra’s** $O((V+E)logV)$
+	- Tree 树: **DFS/BFS** $O(V+E)$
+	- Directed Acyclic Graphs (DAG)有向无环图: **Dynamic Programming** $O(V+E)$
+### Unweighted Graphs: BFS
+在无权重图中，两个节点之间的“最短路径”简单地指的是连接它们的边数最少的路径。BFS 在这种情况下非常合适，因为它按层次（即边数）访问节点，从而能够保证找到的路径是边数最少的。
+以下是使用 BFS 解决无权重图的 SSSP 问题的步骤：
+1. **初始化**：首先，创建一个队列用于 BFS，并将起点（源点）入队。同时，创建一个数组或字典来存储每个节点到源点的最短距离，初始时除了源点（距离设为0）之外的所有节点距离都设为无穷大或未定义。
+2. **进行 BFS**：当队列不为空时，重复以下步骤：
+	- 从队列中弹出一个节点。
+	- 检查该节点的每个邻居：
+		- 如果邻居的最短距离尚未确定（即仍为无穷大或未定义），则更新其最短距离（设置为当前节点的最短距离加1），并将该邻居节点入队。
+3. **终止**：当队列为空时，算法结束。此时，存储节点最短距离的数组或字典中的值即为从源点到每个节点的最短路径长度。
+```Python
+from collections import deque 
+def bfs_sssp(graph, start): 
+	distances = {vertex: float('infinity') for vertex in graph} 
+	distances[start] = 0 
+	
+	queue = deque([start]) 
+	
+	while queue: 
+		current = queue.popleft() 
+		for neighbor in graph[current]: 
+			if distances[neighbor] == float('infinity'): 
+				distances[neighbor] = distances[current] + 1 
+				queue.append(neighbor) 
+	
+	return distances 
+	
+# 示例图 
+graph = { 
+	'A': ['B', 'C'], 
+	'B': ['A', 'D', 'E'], 
+	'C': ['A', 'F'], 
+	'D': ['B'], 
+	'E': ['B', 'F'], 
+	'F': ['C', 'E'] 
+} 
+# 计算从节点 'A' 到所有其他节点的最短距离 
+print(bfs_sssp(graph, 'A'))
+```
+### Graphs without negative weight: Dijkstra’s Algorithm
+Dijkstra算法适用于有向和无向图，并假定所有边的权重都是非负的。它利用贪心策略，逐步确定从源点到图中所有其他顶点的最短路径。
+**Dijkstra算法的基本步骤**:
+1. **初始化**：对于图中的每个顶点，将其最短路径估计设置为无穷大，除了源点，其最短路径估计设为0。维护一个优先队列（最小堆），最初包含所有顶点，优先队列按照顶点的最短路径估计进行排序。
+2. **处理顶点**：当优先队列非空时，重复以下步骤：
+	- 从优先队列中取出最短路径估计最小的顶点（称为当前顶点）。
+	- 对于当前顶点的每个相邻顶点，更新其最短路径估计。如果通过当前顶点到达邻居的路径比已知的路径更短，则更新邻居的最短路径估计，并在优先队列中更新其位置。
+3. **算法结束**：当优先队列为空时，算法结束。此时，每个顶点的最短路径估计就是从源点到该顶点的最短路径。
+```Python
+import heapq
 
-## 8.1 Quiz Related
+def dijkstra(graph, start):
+    # 初始化距离表
+    distances = {vertex: float('infinity') for vertex in graph}
+    distances[start] = 0
+    # 初始化优先队列，并放入起点
+    priority_queue = [(0, start)]
+
+    while priority_queue:
+        current_distance, current_vertex = heapq.heappop(priority_queue)
+        # 如果该顶点的距离已经是最小了，则无需处理
+        if current_distance > distances[current_vertex]:
+            continue
+        # 检查当前顶点的邻居
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_distance + weight
+            # 更新邻居的距离
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(priority_queue, (distance, neighbor))
+
+    return distances
+
+# 示例图
+graph = {
+    'A': {'B': 1, 'C': 4},
+    'B': {'A': 1, 'D': 2, 'E': 5},
+    'C': {'A': 4, 'F': 5},
+    'D': {'B': 2},
+    'E': {'B': 5, 'F': 1},
+    'F': {'C': 5, 'E': 1}
+}
+```
+- 在此算法中，每个顶点从优先队列中提取一次$O(logV)$，由于有V个顶点，所以此步骤的运行速度为$O(VlogV)$
+- 接下来检查当前顶点的邻居，更新邻居的距离需要用到relax操作，这部分的运行速度为$O(ElogV)$
+- 总的运行速度为$O((E+V)logV)$
+### Trees: DFS/BFS
+由于树没有循环，所以我们可以简单地从源点遍历树，同时累加沿路径的权重，以此计算到每个顶点的最短路径。
+
+由于树是一种没有循环的特殊图，所以在树中，从一个顶点到另一个顶点的路径是唯一的。这意味着无论是使用 DFS 还是 BFS，当你首次到达一个顶点时，你找到的就是从源点到这个顶点的最短（也是唯一的）路径。
+**DFS**
+```Python
+def dfs(tree, node, current_distance, distances, visited):
+    visited.add(node)
+    distances[node] = current_distance
+
+    for child, weight in tree[node].items():
+        if child not in visited:
+            dfs(tree, child, current_distance + weight, distances, visited)
+
+def sssp_with_dfs(tree, start):
+    distances = {}
+    visited = set()
+    dfs(tree, start, 0, distances, visited)
+    return distances
+
+# 示例树
+tree = {
+    'A': {'B': 1, 'C': 2},
+    'B': {'A': 1, 'D': 4, 'E': 5},
+    'C': {'A': 2, 'F': 6},
+    'D': {'B': 4},
+    'E': {'B': 5},
+    'F': {'C': 6}
+}
+
+# 计算从节点 'A' 到所有其他节点的最短距离
+print(sssp_with_dfs(tree, 'A'))
+```
+**BFS**
+```Python
+from collections import deque
+
+def sssp_with_bfs(tree, start):
+    distances = {start: 0}
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        for child, weight in tree[node].items():
+            if child not in distances:
+                distances[child] = distances[node] + weight
+                queue.append(child)
+
+    return distances
+
+# 使用相同的树结构和起点调用 BFS
+print(sssp_with_bfs(tree, 'A'))
+
+```
+在这两种方法中，我们都维护了一个 `distances` 字典来记录从源点到每个节点的最短距离。由于树中的路径是唯一的，所以当我们第一次访问每个节点时，计算的距离就是最短距离。DFS 和 BFS 在这种情况下都是有效的，选择哪种方法取决于个人偏好或特定应用场景的需求。
+### Directed Acyclic Graphs: Dynamic Programming
+动态规划在这类问题中的关键在于利用 DAG 的拓扑排序，确保在计算一个顶点的最短路径时，已经计算了其所有前驱节点的最短路径。
+
+动态规划解决 DAG 的 SSSP 问题的步骤如下：
+1. **拓扑排序**：首先对 DAG 进行拓扑排序。拓扑排序是将图中的顶点排成一个线性序列，使得对于图中的每条边 `u -> v`，`u` 在序列中都出现在 `v` 之前。拓扑排序可以通过 DFS 实现。
+2. **初始化距离**：将源点到所有顶点的距离初始化为无穷大，除了源点自身的距离为 0。
+3. **动态规划更新**：按照拓扑排序的顺序，更新每个顶点的最短路径。对于每个顶点，检查所有进入该顶点的边，并更新该顶点的最短路径。
+```Python
+from collections import defaultdict, deque
+
+# 拓扑排序的实现
+def topological_sort(graph):
+    def dfs(node):
+        visited.add(node)
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                dfs(neighbor)
+        order.appendleft(node)
+
+    visited = set()
+    order = deque()
+    for vertex in graph:
+        if vertex not in visited:
+            dfs(vertex)
+    return order
+# 使用 DP 解决 SSSP 问题
+def sssp_in_dag(graph, start):
+    # 拓扑排序
+    topo_order = topological_sort(graph)
+
+    # 初始化距离表
+    distances = {vertex: float('infinity') for vertex in graph}
+    distances[start] = 0
+
+    # 遍历拓扑排序的顺序，更新距离
+    for vertex in topo_order:
+        for neighbor, weight in graph[vertex].items():
+            distances[neighbor] = min(distances[neighbor], distances[vertex] + weight)
+
+    return distances
+
+# 示例 DAG
+dag = {
+    'A': {'B': 3, 'C': 6},
+    'B': {'C': 4, 'D': 4, 'E': 11},
+    'C': {'D': 8, 'G': 11},
+    'D': {'E': -4, 'F': 5, 'G': 2},
+    'E': {'H': 9},
+    'F': {'H': 1},
+    'G': {'H': 2},
+    'H': {}
+}
+# 计算从节点 'A' 到所有其他节点的最短距离
+print(sssp_in_dag(dag, 'A'))
+```
+在这个实现中，首先通过 `topological_sort` 函数得到 DAG 的拓扑排序。然后，在 `sssp_in_dag` 函数中使用这个排序来确保在计算每个顶点的最短路径时，其所有前驱节点的最短路径都已经计算过了。这样，我们可以保证动态规划的每一步都是基于正确和最新的信息。
