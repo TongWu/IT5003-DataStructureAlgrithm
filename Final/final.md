@@ -227,6 +227,8 @@ struct Vertex { // we can use either C struct or C++/Python/Java class
 -   `heapq.heappop(heap)`：弹出并返回 `heap` 中的最小元素，同时保持剩余元素的堆不变性。
 -   `heapq.heappushpop(heap, item)`：将 `item` 放入堆中，然后弹出并返回堆中的最小元素。这个操作比单独调用 `heappush` 和 `heappop` 更有效率。
 -   `heapq.heapify(x)`：将列表 `x` 转换成堆，即重新排列列表 `x` 的元素，使其符合堆的性质。这是以线性时间运行的，非常高效
+## Heap Sort
+
 
 # 4. Binary Search Tree
 
@@ -327,7 +329,11 @@ AVL树是BST的一种改进，得名于其发明者Adelson-Velsky和Landis。AVL
 - Cluster簇被定义为连续占用的插槽集合，覆盖当前键的基地址的簇被称为主簇primary cluster
 - 线性探测可能会产生一个大型的主簇，这会导致搜索/插入/删除的时间远远大于$O(1)$
 # 6. Graph
-
+## Read data from list (into dict)
+```Python
+language_index = {lang: idx for idx, lang in enumerate(languages, start=1)}
+```
+- 对于输入的index不是数字的情况下
 ## Graph Data Structures
 
 ### Adjacency Matrix
@@ -335,14 +341,42 @@ AVL树是BST的一种改进，得名于其发明者Adelson-Velsky和Landis。AVL
     -   通常设置`AM[i][j]=0`来表示没有从i到j的边，然而如果图中包含值为0的加权边，则需要用其他符号(-1, None, NULL)表示无边
 -   使用V*V的二维数组来实现此结构
 -   空间复杂度为$O(V^2)$
+```python
+def create_adjacency_matrix(n, edges):
+    adj_matrix = [[float('inf') for _ in range(n)] for _ in range(n)]
+    for i in range(n):
+        adj_matrix[i][i] = 0
+    for edge in edges:
+        l1, l2, cost = edge
+        adj_matrix[l1][l2] = cost
+        adj_matrix[l2][l1] = cost
+    return adj_matrix
+```
 ### Adjacency List
 -   邻接表(AL)是一个由V个列表组成的数组，每个节点有一个列表。对于每个顶点i,`AL[i]`存储i的邻居，可以存储(neighbour number, weight)对
 -   使用向量对向量实现这种数据结构`AL = [[] for _ in range(N)]`
 -   空间复杂度为$O(V+E)$，比AM要高效的多
+```python
+def create_adjacency_list(n, edges):
+    adj_list = [[] for _ in range(n)]
+    for edge in edges:
+        l1, l2, cost = edge
+        adj_list[l1].append((l2, cost))
+        adj_list[l2].append((l1, cost))
+    return adj_list
+```
 ### Edge List
 -   边列表(EL)是边的集合，包括边所链接的节点和其权重。通常这些边是按权重递增排列的。
 -   使用数组来实现`EL=[]`
 -   空间复杂度为$O(E)$，比AL要高效的多
+```python
+def create_edge_list(edges):
+    edge_list = []
+    for edge in edges:
+        l1, l2, cost = edge
+        edge_list.append((l1, l2, cost))
+    return edge_list
+```
 # 7. Graph Traversal
 ## 7.1 DFS
 - DFS takes one input param: the source vertex `s`
