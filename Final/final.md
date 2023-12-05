@@ -126,6 +126,7 @@ int partition(array A, integer i, integer j)
 ### Radix Sort
 -   假设如果要排序的项目是范围大但位数少的整数，我们可以将计数排序思想与阶乘排序结合起来，以实现线性时间复杂度。
 -   在 Radix 排序中，我们将每个要排序的项目视为 w 位数的字符串（必要时，我们会将小于 w 位数的整数用前导零填充）。
+- 基数排序不是通过比较数值来排序，而是通过按数字级别分配桶来实现排序，每个级别的排序可以采用不同的排序算法。一般情况下，对于十进制数，就会基于数位来进行排序，先从最低有效数字（比如个位）开始，一直到最高有效数字。
 # 2. Linked List
 ## Array
 -   紧凑数组compact array是实现List的理想选择
@@ -172,13 +173,13 @@ struct Vertex { // we can use either C struct or C++/Python/Java class
 ### Queue/Deque in Python
 
 -   `from collection import deque`: 在Python中只集成了deque双端队列。
--   **append(x)**：在右侧添加一个元素。
--   **appendleft(x)**：在左侧添加一个元素。
--   **pop()**：移除并返回右侧的一个元素。
--   **popleft()**：移除并返回左侧的一个元素。
--   **extend(iterable)**：在右侧添加多个元素。
--   **extendleft(iterable)**：在左侧添加多个元素（注意添加的顺序是反转的）。
--   **rotate(n)**：向右旋转队列 `n` 步。如果 `n` 是负数，则向左旋转。
+-   **append(x)**：在右侧添加一个元素。$O(1)$
+-   **appendleft(x)**：在左侧添加一个元素。$O(1)$
+-   **pop()**：移除并返回右侧的一个元素。$O(1)$
+-   **popleft()**：移除并返回左侧的一个元素。$O(1)$
+-   **extend(iterable)**：在右侧添加多个元素。$O(k)$,k是迭代器中元素的数量
+-   **extendleft(iterable)**：在左侧添加多个元素（注意添加的顺序是反转的）。$O(k)$
+-   **rotate(n)**：向右旋转队列 `n` 步。如果 `n` 是负数，则向左旋转。$O(k)$
     -   当 `n > 0` 时，`deque` 的最右侧的 `n` 个元素会被移动到队列的左侧。
     -   当 `n < 0` 时，`deque` 的最左侧的 `-n` 个元素会被移动到队列的右侧。
     -   当 `n = 0` 时，不会发生任何变化。
@@ -193,11 +194,11 @@ struct Vertex { // we can use either C struct or C++/Python/Java class
     dq.rotate(2)
     print(dq)  # 输出: deque([3, 4, 5, 1, 2])
 	```
--   **clear()**：清空队列。
--   **count(x)**：计算队列中元素 `x` 的个数。
--   **index(x, [start, [stop]])**：返回元素 `x` 在队列中的索引。
--   **insert(i, x)**：在位置 `i` 插入元素 `x`。
--   **remove(x)**：移除队列中第一个匹配的元素 `x`。
+-   **clear()**：清空队列。$O(n)$
+-   **count(x)**：计算队列中元素 `x` 的个数。$O(n)$
+-   **index(x, [start, [stop]])**：返回元素 `x` 在队列中的索引。$O(n)$
+-   **insert(i, x)**：在位置 `i` 插入元素 `x`。$O(n)$
+-   **remove(x)**：移除队列中第一个匹配的元素 `x`。$O(n)$
 # 3. Binary (Max) Heap
 
 -   最大二叉堆是一种特殊的**完全二叉树**，用于模拟**优先队列**。
@@ -223,10 +224,10 @@ struct Vertex { // we can use either C struct or C++/Python/Java class
 ## Python中的二叉堆
 
 -   `import heapq`：`heapq`提供了**最小堆**的实现，如果需要实现最大堆，则可以将元素取反来实现。
--   `heapq.heappush(heap, item)`：将元素 `item` 添加到堆 `heap` 中。这会保持堆的不变性，即堆的第一个元素始终是最小的。
--   `heapq.heappop(heap)`：弹出并返回 `heap` 中的最小元素，同时保持剩余元素的堆不变性。
--   `heapq.heappushpop(heap, item)`：将 `item` 放入堆中，然后弹出并返回堆中的最小元素。这个操作比单独调用 `heappush` 和 `heappop` 更有效率。
--   `heapq.heapify(x)`：将列表 `x` 转换成堆，即重新排列列表 `x` 的元素，使其符合堆的性质。这是以线性时间运行的，非常高效
+-   `heapq.heappush(heap, item)`：将元素 `item` 添加到堆 `heap` 中。这会保持堆的不变性，即堆的第一个元素始终是最小的。$O(logn)$
+-   `heapq.heappop(heap)`：弹出并返回 `heap` 中的最小元素，同时保持剩余元素的堆不变性。$O(logn)$
+-   `heapq.heappushpop(heap, item)`：将 `item` 放入堆中，然后弹出并返回堆中的最小元素。这个操作比单独调用 `heappush` 和 `heappop` 更有效率。$O(logn)$
+-   `heapq.heapify(x)`：将列表 `x` 转换成堆，即重新排列列表 `x` 的元素，使其符合堆的性质。这是以线性时间运行的，非常高效$O(n)$
 ## Heap Sort
 
 
@@ -237,22 +238,18 @@ struct Vertex { // we can use either C struct or C++/Python/Java class
 ### 二叉搜索树（BST）
 
 二叉搜索树是一种有以下性质的二叉树：
-
 1.  每个节点的值都大于其左子树上任意节点的值。
 2.  每个节点的值都小于其右子树上任意节点的值。
 3.  左右子树也分别是二叉搜索树。
 
 BST的优点是实现简单，提供了有效的查找、插入和删除操作。然而，它的主要缺点是不保证树的平衡。在最坏的情况下（例如，连续插入有序的数据），BST可以退化成一个链表，导致查找、插入和删除操作的时间复杂度变为O(n)。
-
 ### AVL树
 
 AVL树是BST的一种改进，得名于其发明者Adelson-Velsky和Landis。AVL树在BST的基础上增加了额外的平衡条件：
-
 -   AVL树是一种高度平衡的二叉搜索树。
 -   每个节点的左右子树的高度差（平衡因子）最多为1。
 
 为了维护这种高度平衡，AVL树在插入和删除节点时可能需要通过旋转来重新平衡。这些旋转操作有助于确保树的高度大致保持在log(n)，从而使得查找、插入和删除操作的时间复杂度都维持在O(log n)。
-
 ### 主要区别
 
 1.  **平衡性**：AVL树保证了树的平衡，而普通的BST不保证。
@@ -272,7 +269,7 @@ AVL树是BST的一种改进，得名于其发明者Adelson-Velsky和Landis。AVL
 ### BST Query Operation (remain BST Structure)
 -   `search(v)`: 我们设置当前节点为根，然后检查当前顶点小于/等于/大于我们需要搜索的整数V，然后分别转到右侧/停止/左侧子树，直到我们找到节点
 -   `searchMin(), searchMax()`: 从根开始向左/右侧子树查找最小/最大元素
--   `successor(v)`：寻找整数v的后继数。如果v没有右子树，则找到第一个大于顶点v的父顶点w。如果有右子树，则找到右子树中最小的节点
+-   `successor(v)`：寻找整数v的后继数。如果v没有右子树，则找到第一个大于顶点v的父顶点w。如果有右子树，则找到右子树中最小的节点。
 -   `predecessor(v)`: 寻找整数v的前任数。如果v没有左子树，则找到第一个小于顶点v的父顶点w。如果有左子树，则找到左子树中最大的节点
 -  这些操作的时间复杂度为$O(h)$,h为BST的高度
 	-   BST的最大高度可能为$N$
@@ -700,3 +697,43 @@ dag = {
 print(sssp_in_dag(dag, 'A'))
 ```
 在这个实现中，首先通过 `topological_sort` 函数得到 DAG 的拓扑排序。然后，在 `sssp_in_dag` 函数中使用这个排序来确保在计算每个顶点的最短路径时，其所有前驱节点的最短路径都已经计算过了。这样，我们可以保证动态规划的每一步都是基于正确和最新的信息。
+# Pastpaper related
+## Python implement ADT
+- **Linked List, Doubly Linked List**: 自定义类来实现
+- **Stack**: 使用list实现
+- **Queue, Double-Ended Queue(Deque)**: 使用`collections.deque`实现，此库实现的是双端队列，通过禁用`appendleft`和`pop`来实现
+- **Binary Heap**: 使用list实现，同时使用`heapq`模块实现堆操作。`heapq`实现的是最小堆操作，对于最大堆，需要将list中的元素取反
+- **Priority Queue**: 使用Binary Heap实现
+- **Binary Search Tree (BST)**: 自定义类实现
+- **Adjacency Matrix**: 二维数组实现，`AM[i][j]`表示从节点i到节点j的边，所存储的值为此边的权重
+- **Adjacency List**: 字典实现，键为顶点，值为邻接节点的列表
+- **Edge List**: 列表实现，列表中的每一个元素为一个表示边的元组`set(node1, node2, weight)`
+## Time Complexity for algorithms and DS operations
+### Sorting
+- #### Comparison Based Sorting
+	- **Bubble Sort, Selection Sort, Insertion Sort** = $O(N^2)$
+	- **Merge Sort, Quick Sort** = $O(N log N)$
+- #### Non Comparison Based Sorting Algorithm
+	- **Counting Sort** = $O(N)$
+		- 在对于最大和最小值之差不是很大，且重复值多的整数数组排序时非常高效
+		- 然而对于非整数排序则需要调整
+		- 如果数值范围很大，即使只有几个数，也需要大量的空间复杂度
+	- **Radix Sort** = $O(nk)$, n是排序的项数，k是数字平均长度
+		- 其需要更多的空间来存储桶
+		- 只可用于分解为独立数位的数据类型（整数或长字符串）
+### Python Array (List)
+- **索引 `list[i]`**: 时间复杂度为O(1)。因为列表是通过连续内存空间存储元素，所以可以直接根据索引快速访问元素。
+- **末尾添加元素（例如 `list.append(item)`）** - 平均时间复杂度为O(1)。尽管偶尔需要扩展内存空间来容纳更多元素，导致时间复杂度增加，但通常情况下，添加元素是非常快的。
+- **末尾删除元素（例如 `list.pop()`）** - 时间复杂度为O(1)。由于删除的是最后一个元素，所以这个操作非常快速。
+- **插入或删除指定位置的元素（例如 `list.insert(i, item)` 或 `list.pop(i)`）** - 时间复杂度为O(n)。这是因为插入或删除元素需要移动该位置后面的所有元素来保持列表的连续性。
+- **查找元素（例如 `item in list`）** - 时间复杂度为O(n)。在最坏的情况下，可能需要遍历整个列表来查找元素。
+- **列表长度（例如 `len(list)`）** - 时间复杂度为O(1)。Python内部会存储列表的长度，因此获取长度是即时的。
+- **列表排序（例如 `list.sort()` 或 `sorted(list)`）** - 时间复杂度为O(n log n)。Python使用的排序算法是Timsort，这是一种高效的排序算法，适用于多种类型的数据。
+- **列表切片（例如 `list[start:end]`）** - 时间复杂度为O(k)，其中k是切片的长度。切片操作需要创建新列表并复制元素。
+- **末尾添加元素（例如 `list.append(item)`）** - 平均时间复杂度为O(1)。尽管偶尔需要扩展内存空间来容纳更多元素，导致时间复杂度增加，但通常情况下，添加元素是非常快的。
+- **末尾删除元素（例如 `list.pop()`）** - 时间复杂度为O(1)。由于删除的是最后一个元素，所以这个操作非常快速。
+- **插入或删除指定位置的元素（例如 `list.insert(i, item)` 或 `list.pop(i)`）** - 时间复杂度为O(n)。这是因为插入或删除元素需要移动该位置后面的所有元素来保持列表的连续性。
+- **查找元素（例如 `item in list`）** - 时间复杂度为O(n)。在最坏的情况下，可能需要遍历整个列表来查找元素。
+- **列表长度（例如 `len(list)`）** - 时间复杂度为O(1)。Python内部会存储列表的长度，因此获取长度是即时的。
+- **列表排序（例如 `list.sort()` 或 `sorted(list)`）** - 时间复杂度为O(n log n)。Python使用的排序算法是Timsort，这是一种高效的排序算法，适用于多种类型的数据。
+- **列表切片（例如 `list[start:end]`）** - 时间复杂度为O(k)，其中k是切片的长度。切片操作需要创建新列表并复制元素。
