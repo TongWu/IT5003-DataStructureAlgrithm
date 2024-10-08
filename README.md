@@ -22,4 +22,4 @@ The Book is avaliable in online store which has a link in Prof's website. The bo
 
 ## Notes
 
-The self-orgnised note can be found at [this link](https://wiki.wu.engineer/NationalUniversityOfSingapore/IT5003-DataStructureAlgorithm), or navigate to the 'Notes' folder in this repo.
+The self-orgnised note can be found at [this link](https://wiki.wu.engineer/archives/it5003-note), or navigate to the 'Notes' folder in this repo.
